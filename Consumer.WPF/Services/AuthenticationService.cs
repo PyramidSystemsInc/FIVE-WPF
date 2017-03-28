@@ -86,13 +86,12 @@ namespace Consumer.Services
             }
         }
 
-        public async Task<ImmutableCredentials> Login()
+        public async Task<ImmutableCredentials> Login(string userName, string password)
         {
-            //TODO: Pass username/password
             var values = new Dictionary<string, string>
             {
-                { "username", "" },
-                { "password", "" }
+                { "username", userName },
+                { "password", password }
             };
 
             var content = new FormUrlEncodedContent(values);

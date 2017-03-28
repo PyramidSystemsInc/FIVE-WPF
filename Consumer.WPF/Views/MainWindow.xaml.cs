@@ -61,12 +61,12 @@ namespace Consumer
         {
             if (!e.Data.GetDataPresent(DataFormats.FileDrop)) return;
             // Note that you can have more than one file.
-            var files = (string[]) e.Data.GetData(DataFormats.FileDrop);
+            var files = (string[])e.Data.GetData(DataFormats.FileDrop);
             await ViewModel.UploadFiles(files);
         }
-        
 
-       
+
+
         private void OnExamSelected(object sender, SelectionChangedEventArgs e)
         {
             FilesContainer.Visibility = Visibility.Visible;
@@ -84,6 +84,12 @@ namespace Consumer
             if (dialog.ShowDialog() != CommonFileDialogResult.Ok) return;
             var uploadFiles = ViewModel?.UploadFiles(dialog.FileNames);
             if (uploadFiles != null) await uploadFiles;
+        }
+
+        private void Login(object sender, RoutedEventArgs e)
+        {
+            var dataContext = DataContext as MainViewModel;
+            dataContext?.Login(UserName.Text, Password.Password);
         }
     }
 }

@@ -12,6 +12,7 @@ using Amazon.S3;
 using Amazon.S3.Transfer;
 using Consumer.Annotations;
 using Consumer.Models;
+using Consumer.Services;
 
 namespace Consumer.ViewModels
 {
@@ -23,15 +24,6 @@ namespace Consumer.ViewModels
         public MainViewModel()
         {
             _authenticationService = new AuthenticationService();
-            Setup();
-        }
-
-        private async void Setup()
-        {
-            UploadContainerVisibility = Visibility.Collapsed;
-            await _authenticationService.Login();
-            Exams = await _authenticationService.GetExams();
-            OnPropertyChanged(nameof(Exams));
         }
 
         public ObservableCollection<UploadViewModel> Uploads { get; } = new ObservableCollection<UploadViewModel>();
@@ -162,6 +154,23 @@ namespace Consumer.ViewModels
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public async void Login(string userName, string password)
+        {
+
+            try
+            {
+                UploadContainerVisibility = Visibility.Collapsed;
+
+                await _authenticationService.Login(userName,password);
+                Exams = await _authenticationService.GetExams();
+                OnPropertyChanged(nameof(Exams));
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Wrong username or password");
+            }
         }
     }
 }

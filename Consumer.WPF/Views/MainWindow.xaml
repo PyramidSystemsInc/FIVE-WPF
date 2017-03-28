@@ -17,17 +17,26 @@
         FontFamily="{DynamicResource MaterialDesignFont}" d:DataContext="{d:DesignInstance viewModels:MainViewModel}">
     <Grid>
         <Grid.ColumnDefinitions>
+
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <ListBox x:Name="Exams" ItemsSource="{Binding Exams}" SelectedItem="{Binding SelectedExam}"  SelectionChanged="OnExamSelected">
+        <StackPanel Orientation="Vertical" Width="300">
+            <TextBlock Text="Username" Margin="5"></TextBlock>
+            <TextBox x:Name="UserName" Margin="5"/>
+            <TextBlock Text="Password" Margin="5"></TextBlock>
+            <PasswordBox x:Name="Password" Margin="5"></PasswordBox>
+            <Button Click="Login" Margin="5">Login</Button>
+        </StackPanel>
+        <ListBox Grid.Column="1"  x:Name="Exams" ItemsSource="{Binding Exams}" SelectedItem="{Binding SelectedExam}"  SelectionChanged="OnExamSelected">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Style="{DynamicResource MaterialDesignDisplay1TextBlock}" Text="{Binding ExamName}" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Grid Grid.Column="1" Visibility="Collapsed" x:Name="FilesContainer">
+        <Grid Grid.Column="2" Visibility="Collapsed" x:Name="FilesContainer">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
